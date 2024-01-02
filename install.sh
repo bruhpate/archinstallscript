@@ -38,9 +38,9 @@ echo "Disco partizionato"
 echo "Installazione filesystem"
 sleep 15
 if [[ $2 == ext4 ]];then
-	mkfs.ext4 $root_part
+	mkfs.ext4 -f $root_part
 elif [[ $2 == btrfs ]];then
-	mkfs.btrfs $root_part
+	mkfs.btrfs -f $root_part
 fi
 sleep 15
 mkfs.vfat $boot_part
