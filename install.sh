@@ -10,7 +10,10 @@ if [ $? -ne 0 ]; then
 	exit 0
 fi
 
+#$1
 disk="/dev/sda"
+root_part=$disk"2"
+boot_part=$disk"1"
 echo "Hai 15 secondi per interrompere l'operazione"
 sleep 15
 
@@ -25,3 +28,32 @@ n
 
 w
 EOF
+
+echo "Disco partizionato"
+
+#$2
+echo "Installazione filesystem"
+
+if [[ $2 == ext4 ]];then
+	mkfs.ext4 $root_part
+elif [[ $2 == btrfs ]];then
+	mkfs.btrfs $root_part
+fi
+
+mkfs.vfat $boot_part
+
+mount $root_part /mnt
+mkdir /mnt/boot
+mount $boot_part /mnt/boot
+
+pacstrap -K /mnt base linux linux-firmware
+genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+#ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
+#hwclock --systohc
+#
+#echo "LANG=it_IT.UTF-8" >> /etc/locate.conf
+#echo "KEYMAP=it" >> /etc/vconsole.conf
+#echo "archlinux" >> /etc/hostname
+#
