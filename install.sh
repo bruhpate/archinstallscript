@@ -14,9 +14,10 @@ fi
 disk="/dev/sda"
 root_part=$disk"2"
 boot_part=$disk"1"
-echo "Hai 15 secondi per interrompere l'operazione"
+echo "hai 15 secondi per interrompere l'operazione"
 sleep 15
 
+dd if=/dev/zero of=$1 bs=512 count=1 conv=notrunc
 fdisk $disk <<EOF
 n
 1
