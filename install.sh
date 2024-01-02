@@ -14,16 +14,18 @@ fi
 disk="/dev/sda"
 root_part=$disk"2"
 boot_part=$disk"1"
-echo "hai 15 secondi per interrompere l'operazione"
+echo "Eliminazione disco, hai 15 secondi per interrompere l'operazione"
 sleep 15
 
 dd if=/dev/zero of=$1 bs=512 count=1 conv=notrunc
 fdisk $disk <<EOF
 n
+p
 1
 2048
 +1G
 n
+p
 2
 
 
