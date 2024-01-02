@@ -33,19 +33,20 @@ echo "Disco partizionato"
 
 #$2
 echo "Installazione filesystem"
-
+sleep 15
 if [[ $2 == ext4 ]];then
 	mkfs.ext4 $root_part
 elif [[ $2 == btrfs ]];then
 	mkfs.btrfs $root_part
 fi
-
+sleep 15
 mkfs.vfat $boot_part
 
 mount $root_part /mnt
 mkdir /mnt/boot
 mount $boot_part /mnt/boot
 
+pacman-key --init
 pacstrap -K /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
