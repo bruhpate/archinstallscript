@@ -18,7 +18,7 @@ fdisk $disk <<EOF
 n
 1
 2048
-+1024MB
++1G
 n
 2
 
