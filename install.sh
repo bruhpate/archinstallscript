@@ -43,16 +43,21 @@ elif [[ $2 == btrfs ]];then
 	mkfs.btrfs -f $root_part
 fi
 sleep 15
-mkfs.vfat $boot_part
+mkfs.vfat -F 32 $boot_part
 
 mount $root_part /mnt
 mkdir /mnt/boot
 mount $boot_part /mnt/boot
 
-pacman-key --init
+
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
 pacstrap -K /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
+cp /root/archinstallscript/install2.sh /mnt/root/
+cp /mnt/root/.bashrc /mnt/root/.bashrc2
+echo "./install2.sh" >> /mnt/root/.bashrc
 arch-chroot /mnt
 #ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
 #hwclock --systohc
