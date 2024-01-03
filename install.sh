@@ -36,33 +36,24 @@ echo "Disco partizionato"
 
 #$2
 echo "Installazione filesystem"
-sleep 15
 if [[ $2 == ext4 ]];then
 	mkfs.ext4 $root_part
 elif [[ $2 == btrfs ]];then
 	mkfs.btrfs -f $root_part
 fi
-sleep 15
 mkfs.vfat -F 32 $boot_part
 
 mount $root_part /mnt
 mkdir /mnt/boot
 mount $boot_part /mnt/boot
 
+mv pacman.conf /etc/pacman.conf
 
-sudo pacman-key --init
-sudo pacman-key --populate archlinux
 pacstrap -K /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 
-cp /root/archinstallscript/install2.sh /mnt/root/
+cp install2.sh /mnt/root/
 cp /mnt/root/.bashrc /mnt/root/.bashrc2
 echo "./install2.sh" >> /mnt/root/.bashrc
 arch-chroot /mnt
-#ln -sf /usr/share/zoneinfo/Europe/Rome /etc/localtime
-#hwclock --systohc
-#
-#echo "LANG=it_IT.UTF-8" >> /etc/locate.conf
-#echo "KEYMAP=it" >> /etc/vconsole.conf
-#echo "archlinux" >> /etc/hostname
-#
+
