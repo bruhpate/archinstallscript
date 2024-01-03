@@ -54,6 +54,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 cp install2.sh /mnt/root/
 cp /mnt/root/.bashrc /mnt/root/.bashrc2
-echo "./install2.sh" >> /mnt/root/.bashrc
+echo "sh /root/install2.sh" >> /mnt/root/.bashrc
 arch-chroot /mnt
 
