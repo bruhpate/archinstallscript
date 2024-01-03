@@ -11,7 +11,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #$1
-disk="/dev/sda"
+disk="$1"
 root_part=$disk"2"
 boot_part=$disk"1"
 echo "Eliminazione disco, hai 15 secondi per interrompere l'operazione"
